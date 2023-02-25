@@ -5,12 +5,8 @@ source_path = 'data/tax-return.xlsx'
 file = openpyxl.load_workbook(source_path, read_only=True)
 
 
-def load_list(_list):
-    for i in _list:
-        return i
-
-
-def get_excel(sheet_index: str): return file[sheet_index]
+def get_excel(sheet_index: str):
+    return file[sheet_index]
 
 
 def get_amount_payment(sheet_index: int, max_row: int) -> int:
@@ -37,15 +33,19 @@ totals = [
 ]
 
 
-def get_total_amount(select_index=6):
+def get_total_amount(select_index: int = 6):
     sheet = get_excel(sheet_index[4])
 
     def boolean(index: int, cell_x, cell_y):
         if index == select_index:
             return sheet.cell(cell_x, cell_y).value
-    # for i in range():
-        # pass
-    return boolean(0, 3, 14)
+        else:
+            return None
+
+
+class GetTotalAmount:
+    def __init__(self, index: int):
+        pass
 
 
 def sentence(ret: int, index: int, max: int) -> int:
@@ -94,15 +94,10 @@ sheet_index = [
 ]
 
 load_sentences = [
-    '{}: {}'.format(sheet_index[0], get_amount_payment(
-        sheet_index[0], rows[0])),
-    '{}: {}'.format(sheet_index[1], get_amount_payment(
-        sheet_index[1], rows[1])),
-    '{}: {}'.format(sheet_index[2], get_amount_payment(
-        sheet_index[2], rows[2])),
-    '{}: {}'.format(sheet_index[3], get_amount_payment(
-        sheet_index[3], rows[3])),
-    '{}'.format(get_total_amount(0)),
+    f'{index}: {get_amount_payment(index, row)}'
+    for index, row in zip(sheet_index, rows)
+]+[
+    str(get_total_amount(select_index=0))
 ]
 
 if __name__ == '__main__':
