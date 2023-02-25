@@ -60,9 +60,9 @@ def sentence(ret: int, index: int, max: int) -> int:
         paid = sheet.cell(i, columns['paid']).value
         payment_sum.append(paid)
 
-        if ret == 0:  # ^ amount payment
+        if ret == 0:  # * amount payment
             return sum(payment_sum)
-        elif ret == 1:  # ^ sentence
+        elif ret == 1:  # * sentence
             ap = f'{month}月, {name}, {paid}円'
             payment_sum.append(ap)
             return payment_sum
@@ -96,7 +96,7 @@ sheet_index = [
 load_sentences = [
     f'{index}: {get_amount_payment(index, row)}'
     for index, row in zip(sheet_index, rows)
-]+[
+] + [
     str(get_total_amount(select_index=0))
 ]
 
